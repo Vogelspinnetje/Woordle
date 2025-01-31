@@ -45,7 +45,7 @@ def keuzemenu() -> str:
     """
 
     while True:
-        km_keuze = input("Opties:\n"
+        km_keuze:str = input("Opties:\n"
                          "\t1) Woordle spelen\n"
                          "\t2) Woord toevoegen\n"
                          "\t3) Scores bekijken\n"
@@ -88,22 +88,13 @@ def kies_woord(woorden_bestand: str) -> str:
     bestand niet bestaat, wordt het woord hachee gebruikt.
     """
     try:
-        kw_bestand = open(woorden_bestand, "r")
+        with open(woorden_bestand, "r") as file:
+            woordenlijst: list[str] = [regels.strip() for regels in file]
 
-        woordenlijst = []
-
-        for woorden in kw_bestand:
-            woordenlijst.append(woorden)
-
-        kw_bestand.close()
-
-        kw_woord = choice(woordenlijst)
-        kw_woord = kw_woord.replace("\n", "")
+        return choice(woordenlijst)
 
     except FileNotFoundError:
-        kw_woord = "hachee"
-
-    return kw_woord
+        return "hachee"
 
 
 def print_raster_en_alfabet(prea_raster: list[str], prea_beschikbare_letters:str, prea_geraden_woorden:list[str]):
@@ -397,16 +388,16 @@ def main():
     keuzemenu kiest om te stoppen.
     """
     
-    woorden_bestand = "woordlewoorden.txt"
-    scores_bestand = "woordlescores.txt"
+    woorden_bestand: str = "woordlewoorden.txt"
+    scores_bestand: str = "woordlescores.txt"
     print("\nWelkom bij het beste spel van de wereld: WOORDLE!")
 
     while True:
-        keuze = keuzemenu()
+        keuze: str = keuzemenu()
 
         if keuze == "1":
-            naam = naam_vragen_en_formatteren()
-            woord = kies_woord(woorden_bestand)
+            naam: str = naam_vragen_en_formatteren()
+            woord: str = kies_woord(woorden_bestand)
             geraden = woordle_spelen(naam, woord)
             bestand_inhoud_uw = bestand_uitlezen(scores_bestand)
             items_speler, plaats, \
