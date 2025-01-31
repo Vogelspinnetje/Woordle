@@ -33,11 +33,8 @@ from random import choice
 
 
 # KEUZE MAKEN
-def keuzemenu():
+def keuzemenu() -> str:
     """
-    :param:
-    :return: (str)de gemaakte keuze (1,2,3,4).
-
     Deze functie vraagt de gebruiker om een keuze te maken uit
     het keuzemenu. Daarna controleert het programma of de
     gebruiker een geldige keuze heeft gemaakt. Als dat het geval
@@ -56,6 +53,8 @@ def keuzemenu():
 
         if km_keuze in "1234" and len(km_keuze) == 1:
             return km_keuze
+        else:
+            print("Geef een geldige keuze op (1/2/3/4).")
 
 
 # WOORDLE SPELEN
@@ -95,11 +94,8 @@ def naam_vragen_en_formatteren():
     return nvef_naam
 
 
-def kies_woord(woorden_bestand):
+def kies_woord(woorden_bestand) -> str:
     """
-    :param:
-    :return: (str)het woord waarmee gespeeld gaat worden.
-
     Deze functie haalt een willekeurig woord op uit
     het tekstbestand "woordlewoorden.txt". Als dit
     bestand niet bestaat, wordt het woord hachee gebruikt.
@@ -123,14 +119,8 @@ def kies_woord(woorden_bestand):
     return kw_woord
 
 
-def print_raster_en_alfabet(prea_raster, prea_beschikbare_letters, prea_geraden_woorden):
+def print_raster_en_alfabet(prea_raster: list[str], prea_beschikbare_letters:str, prea_geraden_woorden:list[str]):
     """
-    :param:prea_beschikbare_letters: (str)letters die de gebruiker kan
-                                     kan gebruiken in zijn woord.
-    :param:prea_raster: (list)de rasters die geprint moeten worden.
-    :param:prea_geraden_woorden: (list)eerder geraden woorden.
-    :return:
-
     Deze functie print het raster en de beschikbare letters.
     Dit staat in een aparte functie omdat de functie woordle_spelen
     anders een te grote chaos werd.
@@ -159,11 +149,8 @@ def print_raster_en_alfabet(prea_raster, prea_beschikbare_letters, prea_geraden_
 
 
 # WORDT GEBRUIKT VOOR WOORDLE SPELEN, WOORD TOEVOEGEN EN SCORES BEKIJKEN
-def bestand_uitlezen(bestandsnaam):
+def bestand_uitlezen(bestandsnaam:str) -> str:
     """
-    :param:bestandsnaam: (str)naam van uit te lezen bestand.
-    :return: (str)het uitgelezen bestand.
-
     Deze functie leest tekstbestand uit.
     """
 
@@ -174,17 +161,8 @@ def bestand_uitlezen(bestandsnaam):
     return bu_bestand_inhoud
 
 
-def bestand_wegschrijven(bw_items_speler, bw_plaats, bw_coefficient):
+def bestand_wegschrijven(bw_items_speler:list[list[str]], bw_plaats:int, bw_coefficient:int):
     """
-    :param:bw_items_speler: (list)een lijst van de spelers met hun
-                            naam, winst en verlies. Deze drie dingen
-                            zitten ook in een lijst. Voorbeeld:
-                            [["John", "0", "0"], ["Yesse", "35", 0]].
-    :param:bw_plaats: (int)de plaats in de lijst waar de speler staat.
-    :param:bw_coefficient: (int)1 wordt gebruikt bij winst
-                                2 wordt gebruikt bij verlies.
-    :return:
-
     Deze functie update de score van de speler, zet de lijsten in het
     juiste format in een string en schrijft dit weg in
     "woordlescores.txt".
@@ -207,12 +185,8 @@ def bestand_wegschrijven(bw_items_speler, bw_plaats, bw_coefficient):
     bw_bestand_schrijven.close()
 
 
-def update_woordlescores(uw_naam, uw_geraden, uw_bestand_inhoud):
+def update_woordlescores(uw_naam:str, uw_geraden:bool, uw_bestand_inhoud:str) -> tuple[list[list[str]], int, int]:
     """
-    :param:uw_naam: (str)de naam van de speler.
-    :param:uw_geraden: (bool)of de speler het geraden heeft of niet.
-    :return:
-
     Deze functie update het woordlescores tekstbestand. Als de speler
     al eerder het spelletje heeft gespeeld, worden zijn statistieken
     aangepast. Als de speler het spelletje nog niet heeft gespeeld,
@@ -238,11 +212,8 @@ def update_woordlescores(uw_naam, uw_geraden, uw_bestand_inhoud):
     return uw_items_speler, uw_plaats, uw_coefficient
 
 
-def woord_opvragen():
+def woord_opvragen() -> str:
     """"
-    :param:
-    :return: (str)het gecheckte, ingevoerde woord.
-
     Deze functie vraagt een woord op. Als dit woord uit alleen
     letters bestaat en het is 6 tekens lang, dan wordt het
     woord ge-returned.
@@ -255,16 +226,8 @@ def woord_opvragen():
     return woord_test.lower()
 
 
-def plusjes_toevoegen(pt_raster, pt_voorkomst, pt_woord_raden, pt_woord):
+def plusjes_toevoegen(pt_raster:str, pt_voorkomst:dict, pt_woord_raden:str, pt_woord:str) -> tuple[str, dict]:
     """
-    :param:pt_raster: (str)laatste raster in de lijst met rasters.
-    :param:pt_voorkomst: (dic)een dictionary met hoe vaak een letter
-                         voorkomt in het woord.
-    :param:pt_woord_raden: (str)het ingevulde woord van de speler.
-    :param:pt_woord: (str)woord gekozen door de computer.
-    :return: (str)het raster met de eventuele plusjes erin.
-    :return: (dic)de letters en hoe vaak ze voorkomen.
-
     Deze functie voegt eventueel de plusjes toe aan het raster. De
     letters uit het ingevoerde woord worden ook in een dictionary
     geplaatst. Dit komt van pas bij het invoeren van de *.
@@ -280,21 +243,8 @@ def plusjes_toevoegen(pt_raster, pt_voorkomst, pt_woord_raden, pt_woord):
     return pt_raster, pt_voorkomst
 
 
-def sterretjes_minnetjes_toevoegen(
-        smt_raster, smt_voorkomst, smt_woord_raden,
-        smt_woord, smt_beschikbare_letter):
+def sterretjes_minnetjes_toevoegen(smt_raster:str, smt_voorkomst:dict, smt_woord_raden:str, smt_woord:str, smt_beschikbare_letter:str) -> tuple[str, dict, str]:
     """
-    :param:smt_raster: (str)laatste raster in de lijst met rasters.
-    :param:smt_voorkomst: (dic)een dictionary met hoe vaak een letter
-                         voorkomt in het woord.
-    :param:smt_woord_raden: (str)het ingevulde woord van de speler.
-    :param:smt_woord: (str)woord gekozen door de computer.
-    :param:smt_beschikbare_letter: (str)de letters die je nog
-                                    kan kiezen.
-    :return: (str)het raster met de eventuele plusjes erin.
-    :return: (dic)de letters en hoe vaak ze voorkomen.
-    :return: (str) met letters waar de gebruiker nog uit kan kiezen.
-
     Deze functie voegt eventueel * en/of - toe. Er wordt gebruik
     gemaakt van de dictionary smt_voorkomst. Door deze dictionary
     weet de functie of er nog een * kan worden toegevoegd.
@@ -323,13 +273,8 @@ def sterretjes_minnetjes_toevoegen(
     return smt_raster, smt_voorkomst, smt_beschikbare_letter
 
 
-def woordle_spelen(ws_naam, ws_woord):
+def woordle_spelen(ws_naam: str, ws_woord: str) -> bool:
     """
-    :param: ws_naam: (str)de gecheckte en geformatteerde naam die de gebruiker
-            heeft opgegeven.
-    :param: woord: (str)het woord waarmee gespeeld gaat worden.
-    :return:
-
     Deze functie speelt het spelletje woordle. Eerst wordt
     de naam gevraagd van de gebruiker in een andere functie.
     Daarna wordt er een woord opgehaald om mee te spelen; ook
@@ -395,7 +340,7 @@ def woordle_spelen(ws_naam, ws_woord):
 
 
 # WOORD TOEVOEGEN
-def woord_toevoegen(wt_bestand_woorden, wt_toevoeg_woord, wt_woordenlijst):
+def woord_toevoegen(wt_bestand_woorden: str, wt_toevoeg_woord: str, wt_woordenlijst: str):
     """"
     :param: bestand_woorden: (str)bestand waar de worden in staan.
     :param: wt_toevoeg_woord: (str)woord wat moet worden toegevoegd.
@@ -420,11 +365,8 @@ def woord_toevoegen(wt_bestand_woorden, wt_toevoeg_woord, wt_woordenlijst):
         print(f"{wt_toevoeg_woord} toegevoegd aan {wt_bestand_woorden}!")
 
 
-def scores_bekijken(sb_bestand_inhoud):
+def scores_bekijken(sb_bestand_inhoud: str):
     """
-    :param:
-    :return:
-
     Deze functie vraagt de gebruiker van wie hij de scores wil
     bekijken. Vervolgens wordt dit op het scherm getoond met
     het winstpercentage.
@@ -462,14 +404,12 @@ def scores_bekijken(sb_bestand_inhoud):
 # MAIN
 def main():
     """
-    :param:
-    :return:
-
     De main wordt gebruikt om functies aan te roepen en
     variabelen op te slaan. De loop die functies aanroept,
     blijft net zolang doorgaan tot de gebruiker in het
     keuzemenu kiest om te stoppen.
     """
+    
     woorden_bestand = "woordlewoorden.txt"
     scores_bestand = "woordlescores.txt"
     print("\nWelkom bij het beste spel van de wereld: WOORDLE!")
@@ -499,4 +439,5 @@ def main():
             exit()
 
 
-main()
+if __name__ == "__main__":
+    main()
