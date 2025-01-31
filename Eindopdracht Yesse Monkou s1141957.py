@@ -30,6 +30,7 @@ tekstbestand weggeschreven of de speler heeft gewonnen of verloren.
 """
 
 from random import choice
+import re
 
 
 # KEUZE MAKEN
@@ -58,12 +59,8 @@ def keuzemenu() -> str:
 
 
 # WOORDLE SPELEN
-def naam_vragen_en_formatteren():
+def naam_vragen_en_formatteren() -> str:
     """
-    :param:
-    :return: (str)de gecheckte en geformatteerde naam die de gebruiker
-            heeft opgegeven.
-
     Deze functie vraagt de gebruiker om zijn naam. De naam mag
     alleen letters en spaties bevatten. Hier wordt ook op
     gecontroleerd. De naam wordt in lowercase gezet en indien de
@@ -73,28 +70,18 @@ def naam_vragen_en_formatteren():
     de naam "john doe" gebruikt.
     """
 
-    input_naam = input("Voer je naam in:")
+    input_naam: str = input("Voer je naam in:").lower()
 
-    lowercase_naam = input_naam.lower()
-    gefilterde_naam = ""
+    gefilterde_naam: str = re.sub("[^a-z\s]", "", input_naam)
+    gefilterde_naam: str = gefilterde_naam[0:10]
 
-    for karakter in lowercase_naam:
-        if karakter.isalpha() or karakter == " ":
-            gefilterde_naam += karakter
+    if gefilterde_naam == "" or gefilterde_naam == "naam":
+        return "john doe"
 
-    if len(gefilterde_naam) > 10:
-        nvef_naam = gefilterde_naam[0:10]
-
-    elif gefilterde_naam == "" or gefilterde_naam == "naam":
-        nvef_naam = "john doe"
-
-    else:
-        nvef_naam = gefilterde_naam
-
-    return nvef_naam
+    return gefilterde_naam
 
 
-def kies_woord(woorden_bestand) -> str:
+def kies_woord(woorden_bestand: str) -> str:
     """
     Deze functie haalt een willekeurig woord op uit
     het tekstbestand "woordlewoorden.txt". Als dit
