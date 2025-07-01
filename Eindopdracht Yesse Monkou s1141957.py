@@ -45,12 +45,14 @@ def keuzemenu() -> str:
     """
 
     while True:
-        km_keuze:str = input("Opties:\n"
-                         "\t1) Woordle spelen\n"
-                         "\t2) Woord toevoegen\n"
-                         "\t3) Scores bekijken\n"
-                         "\t4) Spel sluiten\n"
-                         "Voer een keuze in:")
+        km_keuze: str = input(
+            "Opties:\n"
+            "\t1) Woordle spelen\n"
+            "\t2) Woord toevoegen\n"
+            "\t3) Scores bekijken\n"
+            "\t4) Spel sluiten\n"
+            "Voer een keuze in:"
+        )
 
         if km_keuze in "1234" and len(km_keuze) == 1:
             return km_keuze
@@ -97,7 +99,11 @@ def kies_woord(woorden_bestand: str) -> str:
         return "hachee"
 
 
-def print_raster_en_alfabet(prea_raster: list[str], prea_beschikbare_letters:str, prea_geraden_woorden:list[str]):
+def print_raster_en_alfabet(
+    prea_raster: list[str],
+    prea_beschikbare_letters: str,
+    prea_geraden_woorden: list[str],
+):
     """
     Deze functie print het raster en de beschikbare letters.
     Dit staat in een aparte functie omdat de functie woordle_spelen
@@ -127,7 +133,7 @@ def print_raster_en_alfabet(prea_raster: list[str], prea_beschikbare_letters:str
 
 
 # WORDT GEBRUIKT VOOR WOORDLE SPELEN, WOORD TOEVOEGEN EN SCORES BEKIJKEN
-def bestand_uitlezen(bestandsnaam:str) -> str:
+def bestand_uitlezen(bestandsnaam: str) -> str:
     """
     Deze functie leest tekstbestand uit.
     """
@@ -139,7 +145,9 @@ def bestand_uitlezen(bestandsnaam:str) -> str:
     return bu_bestand_inhoud
 
 
-def bestand_wegschrijven(bw_items_speler:list[list[str]], bw_plaats:int, bw_coefficient:int):
+def bestand_wegschrijven(
+    bw_items_speler: list[list[str]], bw_plaats: int, bw_coefficient: int
+):
     """
     Deze functie update de score van de speler, zet de lijsten in het
     juiste format in een string en schrijft dit weg in
@@ -149,7 +157,8 @@ def bestand_wegschrijven(bw_items_speler:list[list[str]], bw_plaats:int, bw_coef
     scores_bestand = "woordlescores.txt"
 
     bw_items_speler[bw_plaats][bw_coefficient] = str(
-        int(bw_items_speler[bw_plaats][bw_coefficient]) + 1)
+        int(bw_items_speler[bw_plaats][bw_coefficient]) + 1
+    )
 
     tekst = ""
 
@@ -163,7 +172,9 @@ def bestand_wegschrijven(bw_items_speler:list[list[str]], bw_plaats:int, bw_coef
     bw_bestand_schrijven.close()
 
 
-def update_woordlescores(uw_naam:str, uw_geraden:bool, uw_bestand_inhoud:str) -> tuple[list[list[str]], int, int]:
+def update_woordlescores(
+    uw_naam: str, uw_geraden: bool, uw_bestand_inhoud: str
+) -> tuple[list[list[str]], int, int]:
     """
     Deze functie update het woordlescores tekstbestand. Als de speler
     al eerder het spelletje heeft gespeeld, worden zijn statistieken
@@ -191,7 +202,7 @@ def update_woordlescores(uw_naam:str, uw_geraden:bool, uw_bestand_inhoud:str) ->
 
 
 def woord_opvragen() -> str:
-    """"
+    """ "
     Deze functie vraagt een woord op. Als dit woord uit alleen
     letters bestaat en het is 6 tekens lang, dan wordt het
     woord ge-returned.
@@ -199,12 +210,14 @@ def woord_opvragen() -> str:
     woord_test = ""
 
     while not woord_test.isalpha() or len(woord_test) != 6:
-        woord_test = (input("Voer een 6-letter woord in: "))
+        woord_test = input("Voer een 6-letter woord in: ")
 
     return woord_test.lower()
 
 
-def plusjes_toevoegen(pt_raster:str, pt_voorkomst:dict, pt_woord_raden:str, pt_woord:str) -> tuple[str, dict]:
+def plusjes_toevoegen(
+    pt_raster: str, pt_voorkomst: dict, pt_woord_raden: str, pt_woord: str
+) -> tuple[str, dict]:
     """
     Deze functie voegt eventueel de plusjes toe aan het raster. De
     letters uit het ingevoerde woord worden ook in een dictionary
@@ -214,14 +227,21 @@ def plusjes_toevoegen(pt_raster:str, pt_voorkomst:dict, pt_woord_raden:str, pt_w
         if pt_woord_raden[letter_plaats] not in pt_voorkomst.keys():
             pt_voorkomst[pt_woord_raden[letter_plaats]] = 0
         if pt_woord_raden[letter_plaats] == pt_woord[letter_plaats]:
-            pt_raster = pt_raster[:letter_plaats + 1] \
-                        + "+" + pt_raster[letter_plaats + 2:]
+            pt_raster = (
+                pt_raster[: letter_plaats + 1] + "+" + pt_raster[letter_plaats + 2 :]
+            )
             pt_voorkomst[pt_woord_raden[letter_plaats]] += 1
 
     return pt_raster, pt_voorkomst
 
 
-def sterretjes_minnetjes_toevoegen(smt_raster:str, smt_voorkomst:dict, smt_woord_raden:str, smt_woord:str, smt_beschikbare_letter:str) -> tuple[str, dict, str]:
+def sterretjes_minnetjes_toevoegen(
+    smt_raster: str,
+    smt_voorkomst: dict,
+    smt_woord_raden: str,
+    smt_woord: str,
+    smt_beschikbare_letter: str,
+) -> tuple[str, dict, str]:
     """
     Deze functie voegt eventueel * en/of - toe. Er wordt gebruik
     gemaakt van de dictionary smt_voorkomst. Door deze dictionary
@@ -233,20 +253,29 @@ def sterretjes_minnetjes_toevoegen(smt_raster:str, smt_voorkomst:dict, smt_woord
 
     for smt_letter_plaats in range(6):
         if smt_raster[smt_letter_plaats + 1] == "_":
-            if (smt_woord_raden[smt_letter_plaats] in smt_woord
-                    and smt_woord.count(smt_woord_raden[smt_letter_plaats])
-                    > smt_voorkomst[smt_woord_raden[smt_letter_plaats]]):
+            if (
+                smt_woord_raden[smt_letter_plaats] in smt_woord
+                and smt_woord.count(smt_woord_raden[smt_letter_plaats])
+                > smt_voorkomst[smt_woord_raden[smt_letter_plaats]]
+            ):
                 smt_voorkomst[smt_woord_raden[smt_letter_plaats]] += 1
-                smt_raster = (smt_raster[:smt_letter_plaats + 1]
-                              + "*" + smt_raster[smt_letter_plaats + 2:])
+                smt_raster = (
+                    smt_raster[: smt_letter_plaats + 1]
+                    + "*"
+                    + smt_raster[smt_letter_plaats + 2 :]
+                )
 
             else:
-                smt_raster = (smt_raster[:smt_letter_plaats + 1]
-                              + "-" + smt_raster[smt_letter_plaats + 2:])
+                smt_raster = (
+                    smt_raster[: smt_letter_plaats + 1]
+                    + "-"
+                    + smt_raster[smt_letter_plaats + 2 :]
+                )
                 if smt_voorkomst[smt_woord_raden[smt_letter_plaats]] == 0:
                     if smt_woord_raden[smt_letter_plaats] in smt_beschikbare_letter:
                         smt_beschikbare_letter = smt_beschikbare_letter.replace(
-                            smt_woord_raden[smt_letter_plaats], "-")
+                            smt_woord_raden[smt_letter_plaats], "-"
+                        )
 
     return smt_raster, smt_voorkomst, smt_beschikbare_letter
 
@@ -266,18 +295,20 @@ def woordle_spelen(ws_naam: str, ws_woord: str) -> bool:
     de functie die de score aanpast of toevoegt.
     """
 
-    print(f"Welkom bij woordle, {ws_naam}! "
-          f"Je moet het verborgen woord raden.\n"
-          "Voer een 6-letter woord in om het woord te raden.\n"
-          "Wanneer je een woord raadt, krijg je in de regel eronder een"
-          " *, -, of + te zien\n"
-          "Een + betekent dat die letter goed is en op de juiste plaats"
-          " staat.\n"
-          "Een * betekent dat die letter in het woord zit, maar niet op"
-          " de juiste plaats staat\n"
-          "Een - betekent dat die letter niet in het woord zit.\n"
-          "Je hebt 6 pogingen om het 6-letter woord te raden, "
-          "veel succes!\n")
+    print(
+        f"Welkom bij woordle, {ws_naam}! "
+        f"Je moet het verborgen woord raden.\n"
+        "Voer een 6-letter woord in om het woord te raden.\n"
+        "Wanneer je een woord raadt, krijg je in de regel eronder een"
+        " *, -, of + te zien\n"
+        "Een + betekent dat die letter goed is en op de juiste plaats"
+        " staat.\n"
+        "Een * betekent dat die letter in het woord zit, maar niet op"
+        " de juiste plaats staat\n"
+        "Een - betekent dat die letter niet in het woord zit.\n"
+        "Je hebt 6 pogingen om het 6-letter woord te raden, "
+        "veel succes!\n"
+    )
 
     pogingen = 0
     beschikbare_letters = "qwertyuiopasdfghjklzxcvbnm"
@@ -298,18 +329,21 @@ def woordle_spelen(ws_naam: str, ws_woord: str) -> bool:
             ws_geraden = True
         else:
             raster[-1], voorkomst = plusjes_toevoegen(
-                raster[-1], voorkomst, geraden_woorden[-1].lower(), ws_woord)
+                raster[-1], voorkomst, geraden_woorden[-1].lower(), ws_woord
+            )
 
-            raster[-1], voorkomst, \
-                beschikbare_letters = sterretjes_minnetjes_toevoegen(
-                raster[-1], voorkomst, geraden_woorden[-1].lower(), ws_woord,
-                beschikbare_letters)
+            raster[-1], voorkomst, beschikbare_letters = sterretjes_minnetjes_toevoegen(
+                raster[-1],
+                voorkomst,
+                geraden_woorden[-1].lower(),
+                ws_woord,
+                beschikbare_letters,
+            )
 
         pogingen += 1
 
     if not ws_geraden:
-        print(f"Het woord was {ws_woord}. "
-              f"Je hebt het jammer genoeg niet geraden!")
+        print(f"Het woord was {ws_woord}. " f"Je hebt het jammer genoeg niet geraden!")
 
     elif ws_geraden:
         print("Gefeliciteerd! Je hebt het woord goed geraden!")
@@ -318,8 +352,10 @@ def woordle_spelen(ws_naam: str, ws_woord: str) -> bool:
 
 
 # WOORD TOEVOEGEN
-def woord_toevoegen(wt_bestand_woorden: str, wt_toevoeg_woord: str, wt_woordenlijst: str):
-    """"
+def woord_toevoegen(
+    wt_bestand_woorden: str, wt_toevoeg_woord: str, wt_woordenlijst: str
+):
+    """ "
     :param: bestand_woorden: (str)bestand waar de worden in staan.
     :param: wt_toevoeg_woord: (str)woord wat moet worden toegevoegd.
     :return:
@@ -354,8 +390,7 @@ def scores_bekijken(sb_bestand_inhoud: str):
     print("\nJe kunt uit de volgende spelers kiezen:")
 
     for sb_spelers in range(len(sb_bestand_inhoud.split("\n"))):
-        sb_items_speler.append(
-            sb_bestand_inhoud.split("\n")[sb_spelers].split(","))
+        sb_items_speler.append(sb_bestand_inhoud.split("\n")[sb_spelers].split(","))
         if sb_items_speler[-1][0] != "naam":
             print(sb_items_speler[-1][0])
 
@@ -369,14 +404,21 @@ def scores_bekijken(sb_bestand_inhoud: str):
                 sb_keuze_speler = sb_spelers
 
     winstpercentage = round(
-        (int(sb_keuze_speler[1]) / (int(sb_keuze_speler[1])
-                                    + int(sb_keuze_speler[2])) * 100), 2)
+        (
+            int(sb_keuze_speler[1])
+            / (int(sb_keuze_speler[1]) + int(sb_keuze_speler[2]))
+            * 100
+        ),
+        2,
+    )
 
-    print(f"Scores van {sb_keuze_speler[0]}\n"
-          f"Totaal: {(int(sb_keuze_speler[1]) + int(sb_keuze_speler[2]))}\n"
-          f"Gewonnen: {sb_keuze_speler[1]}\n"
-          f"Verloren: {sb_keuze_speler[2]}\n"
-          f"Winst %: {winstpercentage}\n")
+    print(
+        f"Scores van {sb_keuze_speler[0]}\n"
+        f"Totaal: {(int(sb_keuze_speler[1]) + int(sb_keuze_speler[2]))}\n"
+        f"Gewonnen: {sb_keuze_speler[1]}\n"
+        f"Verloren: {sb_keuze_speler[2]}\n"
+        f"Winst %: {winstpercentage}\n"
+    )
 
 
 # MAIN
@@ -387,7 +429,7 @@ def main():
     blijft net zolang doorgaan tot de gebruiker in het
     keuzemenu kiest om te stoppen.
     """
-    
+
     woorden_bestand: str = "woordlewoorden.txt"
     scores_bestand: str = "woordlescores.txt"
     print("\nWelkom bij het beste spel van de wereld: WOORDLE!")
@@ -400,8 +442,9 @@ def main():
             woord: str = kies_woord(woorden_bestand)
             geraden = woordle_spelen(naam, woord)
             bestand_inhoud_uw = bestand_uitlezen(scores_bestand)
-            items_speler, plaats, \
-                coefficient = update_woordlescores(naam, geraden, bestand_inhoud_uw)
+            items_speler, plaats, coefficient = update_woordlescores(
+                naam, geraden, bestand_inhoud_uw
+            )
             bestand_wegschrijven(items_speler, plaats, coefficient)
 
         elif keuze == "2":
